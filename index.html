@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body{
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        form{
+            width: 350px;
+            text-align: center;
+        }
+        fieldset{
+            border-radius: 5px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <form action="" id="form">
+        <fieldset>
+
+            <legend>Register Form</legend>
+
+            <br>
+
+            <label for="firstname">First Name:</label>
+            <input type="text" name="firstname" id="firstname" required><br><br>
+
+            <label for="lastname">Last Name:</label>
+            <input type="text" name="lastname" id="lastname" required><br><br>
+
+            <label for="email">Email:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="text" name="email" id="email" required><br><br>
+
+            <label for="username">Username:</label>&nbsp;
+            <input type="text" name="username" id="username" required><br><br>
+
+            <label for="password">Password:</label>&nbsp;
+            <input type="text" name="password" id="password" required><br><br>
+
+            <input type="submit" name="submit" id="submit"><br><br>
+
+            <span>Already registered</span> <a href="./login.html">Sign In</a>
+
+        </fieldset>
+
+    </form>
+
+    <p id="res"></p>
+
+    <script>
+        let form = document.getElementById("form");
+        let f_name = document.getElementById("firstname");
+        let l_name = document.getElementById("lastname");
+        let email = document.getElementById("email");
+        let username = document.getElementById("username");
+        let password = document.getElementById("password");
+
+        form.addEventListener("submit",async(e)=>{
+            e.preventDefault();
+
+            var  body={
+                first_name:f_name.value,
+                last_name:l_name.value,
+                email:email.value,
+                username:username.value,
+                password:password.value,
+            }
+
+            console.log(body);
+
+            options={
+                
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(body),
+                redirect:"follow"
+            }
+
+            let response = await fetch("https://nodejsform.onrender.com/register",options);
+            let data = await response.json();
+
+
+            console.log(data.message)
+            if(data.status==200){
+            document.getElementById("res").innerHTML=data.message;
+            }else{
+                document.getElementById("res").innerHTML=data.message
+            }
+        })
+    </script>
+</body>
+
+</html>
